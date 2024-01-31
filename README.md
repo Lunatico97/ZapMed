@@ -1,12 +1,13 @@
 # ZapMed (t5-small-MedicoSummarizer)
+- A useful tool for medical students to zap through their research papers !
+- This model was fine-tuned on t5-small on 25,000 PubMed articles for 10 epochs.
 
 ### User Interface
+- Simple text summarizer
 ![image](https://github.com/Lunatico97/ZapMed/assets/60886553/9aa49895-684b-424b-ab2d-7171c31e26f3)
+- PDF summarizer
 ![image](https://github.com/Lunatico97/ZapMed/assets/60886553/dffb7e81-4d0c-4883-a872-980f17d8fb0f)
 ![image](https://github.com/Lunatico97/ZapMed/assets/60886553/a2ffbb64-8a9d-4f37-b9d4-1db8a3c7a1f8)
-
-This model was fine-tuned on t5-small on 25,000 PubMed articles for 10 epochs.
-It achieves the following results on the evaluation set:
 
 ### Training hyperparameters
 
@@ -17,6 +18,8 @@ The following hyperparameters were used during training:
 - learning_rate = 2e-5
 
 ### Training results
+
+It achieves the following results on the evaluation set:
 
 |epoch|eval_loss         |eval_rouge1|eval_rouge2|eval_rougeL|eval_rougeLsum|eval_gen_len|
 |-----|------------------|-----------|-----------|-----------|--------------|------------|
@@ -32,6 +35,7 @@ The following hyperparameters were used during training:
 |10.0 |2.9186391830444336|0.3209     |0.0766     |0.1965     |0.1965        |124.115     |
 
 ## Test Metrics
+
 {'test_loss': 2.8919856548309326,
  'test_rouge1': 0.3207,
  'test_rouge2': 0.0741,
