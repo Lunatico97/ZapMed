@@ -1,5 +1,10 @@
 # ZapMed (t5-small-MedicoSummarizer)
 
+### User Interface
+![image](https://github.com/Lunatico97/ZapMed/assets/60886553/9aa49895-684b-424b-ab2d-7171c31e26f3)
+![image](https://github.com/Lunatico97/ZapMed/assets/60886553/dffb7e81-4d0c-4883-a872-980f17d8fb0f)
+![image](https://github.com/Lunatico97/ZapMed/assets/60886553/a2ffbb64-8a9d-4f37-b9d4-1db8a3c7a1f8)
+
 This model was fine-tuned on t5-small on 25,000 PubMed articles for 10 epochs.
 It achieves the following results on the evaluation set:
 

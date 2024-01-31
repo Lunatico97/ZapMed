@@ -156,7 +156,7 @@ with tab2:
                         beams = beams
                     )[0] 
                 ) ;
-                loadBar.progress((index+1)/len(chunks), text=progress_text + f'{((index+1)/len(chunks))*100} %') ;
+                loadBar.progress((index+1)/len(chunks), text=progress_text + f' [ {((index+1)/len(chunks))*100} % ]') ;
             st.markdown("Operation successfully completed !") ;
             finalSum = ' '.join(summaries) ;
             with open(f"{base_path}/output/summary_{name}.txt" , "w") as f:
