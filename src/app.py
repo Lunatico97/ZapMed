@@ -4,6 +4,7 @@ import os ;
 import streamlit as st ;
 from extractor import base_path ;
 from summarizer import Summarizer ;
+from chatbot import Chatbot ;
 from pdfer import displayPDF, getTextFromPDF, textToChunks, cleanText ;
 
 # PDF2Text Function
@@ -84,7 +85,7 @@ with st.sidebar:
         beams = 4 ;
 
 # Tabs to switch modes of operations
-tab1, tab2 = st.tabs(["Text", "PDF"]) ;
+tab1, tab2, tab03 = st.tabs(["Text", "PDF", "Chat!"]) ;
 with tab1: 
     if 'text' not in st.session_state:
         st.session_state.text = "" ;  
@@ -140,6 +141,7 @@ with tab2:
                 st.subheader("Extracted Text:- ") ;
                 st.markdown(text[0]) ;
 
+
         with tab4:
             progress_text = "Operation in progress. Please wait !!!" ;
             loadBar = st.progress(0, text=progress_text) ;
@@ -169,6 +171,45 @@ with tab2:
                 f.close() ;
                 st.subheader("Summarized Text:- ") ;
                 st.markdown(output) ;
+
+    else:
+        st.info("Please upload a PDF file ! ") ;
+
+with tab03:
+   # PDF Uploader
+    text = "" ;
+    prompt = "" ;
+    chatbot = Chatbot() ;
+    chatbot.kickstart_model() ;
+    context_file = st.file_uploader("Upload context file", type=["pdf"]) ;
+    if context_file is not None:
+        # Get the filename and create a unique save path
+        filename = context_file.name ;
+        name, _extension = os.path.splitext(filename) ;
+        save_path = f"{base_path}/uploads/{filename}" ;
+        # Write the uploaded file to the save path
+        with open(save_path, "wb") as f:
+            f.write(context_file.getbuffer()) ;
+        # Inform the user that the file is saved
+        f.close() ;
+        st.success(f"File '{filename}' successfully uploaded and saved!") ;
+        # Display Button Configuration
+        if st.button('Display PDF'):
+            displayPDF(save_path) ;
+        # PDF2Text Conversion
+        context = PDF2Text(filename) ;
+        st.text_area("Ask anything: ", prompt, height=100) ;
+        if st.button("->"):
+            result = chatbot.askQuery(prompt, context[0]) ; 
+            with st.container(border=True):
+                st.subheader("ZapMed:- ") ;
+                st.markdown(result[0]) ;
+
+        with open(f"{base_path}/output/summary_{name}.txt", "r") as f:
+            output = f.readlines() ;
+            f.close() ;
+            st.subheader("Summarized Text:- ") ;
+            st.markdown(output) ;
 
     else:
         st.info("Please upload a PDF file ! ") ;

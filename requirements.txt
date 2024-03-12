@@ -2,3 +2,5 @@ pdfservices-sdk==2.3.0
 streamlit>=1.29.0
 tensorflow
 nltk
+transformers
+sentencepiece
