@@ -6,6 +6,7 @@ from extractor import base_path
 from summarizer import Summarizer
 from chatbot import Chatbot
 from pdfer import displayPDF, getTextFromPDF, textToChunks, cleanText
+from analytics import generateBLEU, lexicalRedundancy ;
 
 # PDF2Text Function
 def PDF2Text(filename):
@@ -224,9 +225,9 @@ with tab2:
             # Display Button Configuration
             if st.button("Display PDF"):
                 displayPDF(save_path)
-            st.text("extracting text....")
+            st.text("Extracting text....")
             text = PDF2Text(filename)
-            st.text("text extracted successfully")
+            st.text("Text extracted successfully !!!")
             if st.session_state.pdf_text != text[0]:
                 st.session_state.pdf_text = text[0]
                 st.rerun()
