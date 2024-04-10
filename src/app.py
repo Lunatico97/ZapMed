@@ -7,7 +7,7 @@ from summarizer import Summarizer
 from chatbot import Chatbot
 from pdfer import displayPDF, getTextFromPDF, textToChunks, cleanText ;
 from analytics import generateBLEU, lexicalRedundancy ;
-from wordcloud import filterText, generateWordCloud ;
+from word_cloud import filterText, generateWordCloud ;
 
 # PDF2Text Function
 def PDF2Text(filename):
@@ -154,6 +154,8 @@ with tab1:
         )
         st.session_state.text = input_text_box
     with col2:
+        summary = "" ;
+        cleaned_text = "" ;
         summary_text_box = st.text_area(
             "Summary text",
             height=500,
@@ -171,12 +173,6 @@ with tab1:
                 temp=temperature,
                 beams=beams,
             )
-            with st.container(border=True):
-                st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, st.session_state.summary)}") ;
-                st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, st.session_state.summary)}") ;
-                feed = filterText(st.session_state.summary) ;
-                st.pyplot(generateWordCloud(feed)) ;
-            print(generateBLEU(cleaned_text, st.session_state.summary)) ;
             st.rerun() ;
 
     if "text_chat_output" not in st.session_state:
@@ -316,7 +312,11 @@ with tab2:
                 with open(f"{base_path}/output/summary_{name}.txt", "r") as f:
                     output = f.readlines()
                 f.close()
-                summary_output = " ".join(output)
+                summary_output = " ".join(output) ;
+                st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, summary_output)}") ;
+                st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, summary_output)}") ;
+                feed = filterText(summary_output) ;
+                st.pyplot(generateWordCloud(feed)) ;
                 if st.session_state.pdf_summary != finalSum:
                     st.session_state.pdf_summary = finalSum
                     st.rerun()

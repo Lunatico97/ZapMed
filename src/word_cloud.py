@@ -4,7 +4,7 @@ from nltk.tokenize import word_tokenize ;
 from nltk.corpus import stopwords, wordnet ;
 from nltk.stem.wordnet import WordNetLemmatizer ;
 
-def filterText():
+def filterText(processedText):
     nltk.download('stopwords') ;
     nltk.download('punkt') ;
     lm = WordNetLemmatizer() ;
