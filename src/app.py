@@ -5,8 +5,9 @@ import streamlit as st
 from extractor import base_path
 from summarizer import Summarizer
 from chatbot import Chatbot
-from pdfer import displayPDF, getTextFromPDF, textToChunks, cleanText
+from pdfer import displayPDF, getTextFromPDF, textToChunks, cleanText ;
 from analytics import generateBLEU, lexicalRedundancy ;
+from wordcloud import filterText, generateWordCloud ;
 
 # PDF2Text Function
 def PDF2Text(filename):
@@ -170,7 +171,13 @@ with tab1:
                 temp=temperature,
                 beams=beams,
             )
-            st.rerun()
+            with st.container(border=True):
+                st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, st.session_state.summary)}") ;
+                st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, st.session_state.summary)}") ;
+                feed = filterText(st.session_state.summary) ;
+                st.pyplot(generateWordCloud(feed)) ;
+            print(generateBLEU(cleaned_text, st.session_state.summary)) ;
+            st.rerun() ;
 
     if "text_chat_output" not in st.session_state:
         st.session_state.text_chat_output = ""

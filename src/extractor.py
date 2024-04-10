@@ -12,7 +12,7 @@ import re
 PDF_SERVICES_CLIENT_ID = "dedee6b461214e23ba46091e2e621e9b"
 PDF_SERVICES_CLIENT_SECRET = "p8e-i4Blx0SBppPl6oVzFEdem2vl9Y8xDL6B"
 # Configure your absoulute path from root here ! ---> {Diwas}
-abs_path = "/home/diwas/Downloads/"
+abs_path = "/home/diwas/Downloads/Abstractive Summarizer (My Work)"
 base_path = abs_path + "/Streamlit Summarizer App"
 
 

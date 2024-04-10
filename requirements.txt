@@ -4,3 +4,4 @@ tensorflow
 nltk
 transformers
 sentencepiece
+wordcloud
