@@ -4,10 +4,7 @@ from nltk.corpus import stopwords ;
 from collections import Counter ;
 
 def generateBLEU(corpus, summary):
-    # Split corpus into sentences
-    references = corpus.split(".") ; 
-    candidates = summary.split(".") ;
-    bleu_score = corpus_bleu(references, candidates) ;
+    bleu_score = corpus_bleu(corpus, summary) ;
     return bleu_score ;
 
 def lexicalRedundancy(corpus, summary):

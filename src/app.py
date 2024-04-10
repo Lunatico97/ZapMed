@@ -5,6 +5,7 @@ import streamlit as st
 from extractor import base_path
 from summarizer import Summarizer
 from chatbot import Chatbot
+import matplotlib.pyplot as plt ;
 from pdfer import displayPDF, getTextFromPDF, textToChunks, cleanText ;
 from analytics import generateBLEU, lexicalRedundancy ;
 from word_cloud import filterText, generateWordCloud ;
@@ -154,7 +155,6 @@ with tab1:
         )
         st.session_state.text = input_text_box
     with col2:
-        summary = "" ;
         cleaned_text = "" ;
         summary_text_box = st.text_area(
             "Summary text",
@@ -173,7 +173,17 @@ with tab1:
                 temp=temperature,
                 beams=beams,
             )
-            st.rerun() ;
+            #st.rerun() ;
+        
+        if st.session_state.summary != "":
+            with st.container(border=True):
+                #st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, st.session_state.summary[0])}") ;
+                st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, st.session_state.summary[0])}") ;
+                feed = filterText(st.session_state.summary[0]) ;
+                fig, ax = plt.subplots(figsize = (12, 8)) ;
+                ax.imshow(generateWordCloud(feed)) ;
+                plt.axis("off") ;
+                st.pyplot(fig) ;
 
     if "text_chat_output" not in st.session_state:
         st.session_state.text_chat_output = ""
@@ -313,13 +323,13 @@ with tab2:
                     output = f.readlines()
                 f.close()
                 summary_output = " ".join(output) ;
-                st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, summary_output)}") ;
+                #st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, summary_output)}") ;
                 st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, summary_output)}") ;
                 feed = filterText(summary_output) ;
-                st.pyplot(generateWordCloud(feed)) ;
-                if st.session_state.pdf_summary != finalSum:
-                    st.session_state.pdf_summary = finalSum
-                    st.rerun()
+                fig, ax = plt.subplots(figsize = (12, 8)) ;
+                ax.imshow(generateWordCloud(feed)) ;
+                plt.axis("off") ;
+                st.pyplot(fig) ;
 
     if "pdf_chat_output" not in st.session_state:
         st.session_state.pdf_chat_output = ""

@@ -4,19 +4,19 @@ from nltk.tokenize import word_tokenize ;
 from nltk.corpus import stopwords, wordnet ;
 from nltk.stem.wordnet import WordNetLemmatizer ;
 
-def filterText(processedText):
+def filterText(text):
     nltk.download('stopwords') ;
     nltk.download('punkt') ;
+    nltk.download('wordnet') ;
     lm = WordNetLemmatizer() ;
     newWords = [] ;
     stopWords = set(stopwords.words('english')) ;
-    for text in processedText:
-        words = word_tokenize(text) ;
-        for i in words:
-            i = i.lower() ;
-            if i not in stopWords:
-                i = lm.lemmatize(i) ;
-                newWords.append(i) ;                       
+    words = word_tokenize(text) ;
+    for i in words:
+      i = i.lower() ;
+      if i not in stopWords:
+          i = lm.lemmatize(i) ;
+          newWords.append(i) ;                       
     processedText = ' '.join(newWords) ;
     return processedText ;
 
