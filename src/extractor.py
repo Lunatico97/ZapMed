@@ -2,18 +2,19 @@
 # Adobe License: http://www.apache.org/licenses/LICENSE-2.0
 # PDF Extractor File Using Adobe SDK
 
-import logging ;
-import os.path ;
-import zipfile ;
-import json ;
-import re ;
+import logging
+import os.path
+import zipfile
+import json
+import re
 
 # Authentication Key (Adobe SDK)
-PDF_SERVICES_CLIENT_ID = 'dedee6b461214e23ba46091e2e621e9b' ;
-PDF_SERVICES_CLIENT_SECRET = 'p8e-i4Blx0SBppPl6oVzFEdem2vl9Y8xDL6B' ;
+PDF_SERVICES_CLIENT_ID = "dedee6b461214e23ba46091e2e621e9b"
+PDF_SERVICES_CLIENT_SECRET = "p8e-i4Blx0SBppPl6oVzFEdem2vl9Y8xDL6B"
 # Configure your absoulute path from root here ! ---> {Diwas}
-abs_path = "/home/diwas/Downloads/Abstractive Summarizer (My Work)" ;
-base_path = abs_path + "/Streamlit Summarizer App" ;
+abs_path = "/home/diwas/Downloads/"
+base_path = abs_path + "/Streamlit Summarizer App"
+
 
 def run_sdk(pdf_file_name, output_file_name):
     from adobe.pdfservices.operation.auth.credentials import Credentials
@@ -40,7 +41,7 @@ def run_sdk(pdf_file_name, output_file_name):
         # Initial setup, create credentials instance.
         credentials = (
             Credentials.service_principal_credentials_builder()
-            .with_client_id(PDF_SERVICES_CLIENT_ID) 
+            .with_client_id(PDF_SERVICES_CLIENT_ID)
             .with_client_secret(PDF_SERVICES_CLIENT_SECRET)
             .build()
         )
@@ -50,9 +51,7 @@ def run_sdk(pdf_file_name, output_file_name):
         extract_pdf_operation = ExtractPDFOperation.create_new()
 
         # Set operation input from a source file.
-        source = FileRef.create_from_local_file(
-            base_path + "/uploads/" + pdf_file_name
-        )
+        source = FileRef.create_from_local_file(base_path + "/uploads/" + pdf_file_name)
         extract_pdf_operation.set_input(source)
 
         # Build ExtractPDF options and set them into the operation
@@ -73,8 +72,9 @@ def run_sdk(pdf_file_name, output_file_name):
 
 
 def extract_relevant_text(output_file_name):
-    zip_file_path = base_path + "/output/" + output_file_name ;
-    json_file_name = "structuredData.json" ; # It is default so, yeah we gotta use it !
+    zip_file_path = base_path + "/output/" + output_file_name
+    # It is default so, yeah we gotta use it !
+    json_file_name = "structuredData.json"
 
     # Checks if the text belongs to a paragraph (only way available to detect clean text)
     def check_paragraph(test_text):
@@ -97,5 +97,5 @@ def extract_relevant_text(output_file_name):
                     cleaned_text += element["Text"]
 
         else:
-            print(f"{json_file_name} not found in the zip file.") ;
-    return cleaned_text ;
+            print(f"{json_file_name} not found in the zip file.")
+    return cleaned_text
