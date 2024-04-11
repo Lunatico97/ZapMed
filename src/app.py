@@ -177,11 +177,13 @@ with tab1:
         
         if st.session_state.summary != "":
             with st.container(border=True):
+                st.subheader('Lexical Analysis') ;
                 #st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, st.session_state.summary[0])}") ;
-                st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, st.session_state.summary[0])}") ;
+                redundancy = lexicalRedundancy(cleaned_text, st.session_state.summary[0], 0.07) ;
+                st.markdown(f"Redundancy: {redundancy}") ;
                 feed = filterText(st.session_state.summary[0]) ;
                 fig, ax = plt.subplots(figsize = (12, 8)) ;
-                ax.imshow(generateWordCloud(feed)) ;
+                ax.imshow(generateWordCloud(feed, len(redundancy))) ;
                 plt.axis("off") ;
                 st.pyplot(fig) ;
 
@@ -323,11 +325,13 @@ with tab2:
                     output = f.readlines()
                 f.close()
                 summary_output = " ".join(output) ;
+                st.subheader('Lexical Analysis') ;
                 #st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, summary_output)}") ;
-                st.markdown(f"Redundancy: {lexicalRedundancy(cleaned_text, summary_output)}") ;
+                redundancy = lexicalRedundancy(cleaned_text, st.session_state.summary[0], 0.07) ;
+                st.markdown(f"Redundancy: {redundancy}") ;
                 feed = filterText(summary_output) ;
                 fig, ax = plt.subplots(figsize = (12, 8)) ;
-                ax.imshow(generateWordCloud(feed)) ;
+                ax.imshow(generateWordCloud(feed, len(redundancy))) ;
                 plt.axis("off") ;
                 st.pyplot(fig) ;
 

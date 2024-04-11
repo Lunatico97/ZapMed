@@ -7,7 +7,7 @@ def generateBLEU(corpus, summary):
     bleu_score = corpus_bleu(corpus, summary) ;
     return bleu_score ;
 
-def lexicalRedundancy(corpus, summary):
+def lexicalRedundancy(corpus, summary, threshold):
     corpus_tokens = nltk.word_tokenize(corpus.lower()) ;
     summary_tokens = nltk.word_tokenize(summary.lower()) ;
     # Remove stop words
@@ -18,5 +18,13 @@ def lexicalRedundancy(corpus, summary):
     corpus_word_counts = Counter(corpus_tokens_filtered) ;
     summary_word_counts = Counter(summary_tokens_filtered) ;
     # Calculate lexical redundancy
-    redundant_words = [word for word, count in summary_word_counts.items() if count / len(summary_tokens_filtered) > 0.15] ;
+    if len(summary_tokens_filtered) == 0:
+        return []
+    # Identify redundant words
+    redundant_words = [
+        word
+        for word, count in summary_word_counts.items()
+        if count / len(summary_tokens_filtered) > threshold
+        and word in corpus_word_counts 
+    ]
     return redundant_words ;

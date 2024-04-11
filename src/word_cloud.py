@@ -20,7 +20,7 @@ def filterText(text):
     processedText = ' '.join(newWords) ;
     return processedText ;
 
-def generateWordCloud(processedText):
-    wc = WordCloud(background_color='black', max_words=30) ;         
+def generateWordCloud(processedText, length):
+    wc = WordCloud(background_color='black', max_words=length) ;         
     wc.generate(processedText) ;
     return wc ;
