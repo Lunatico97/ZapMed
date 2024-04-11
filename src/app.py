@@ -327,7 +327,7 @@ with tab2:
                 summary_output = " ".join(output) ;
                 st.subheader('Lexical Analysis') ;
                 #st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, summary_output)}") ;
-                redundancy = lexicalRedundancy(cleaned_text, st.session_state.summary[0], 0.07) ;
+                redundancy = lexicalRedundancy(cleaned_text, summary_output, 0.07) ;
                 st.markdown(f"Redundancy: {redundancy}") ;
                 feed = filterText(summary_output) ;
                 fig, ax = plt.subplots(figsize = (12, 8)) ;
