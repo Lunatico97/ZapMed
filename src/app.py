@@ -183,7 +183,10 @@ with tab1:
                 st.markdown(f"Redundancy: {redundancy}") ;
                 feed = filterText(st.session_state.summary[0]) ;
                 fig, ax = plt.subplots(figsize = (12, 8)) ;
-                ax.imshow(generateWordCloud(feed, len(redundancy))) ;
+                if redundancy != 0:
+                    ax.imshow(generateWordCloud(feed, len(redundancy))) ;                
+                else:
+                    ax.imshow(generateWordCloud(feed, 10)) ;
                 plt.axis("off") ;
                 st.pyplot(fig) ;
 
@@ -327,11 +330,14 @@ with tab2:
                 summary_output = " ".join(output) ;
                 st.subheader('Lexical Analysis') ;
                 #st.markdown(f"BLEU Score: {generateBLEU(cleaned_text, summary_output)}") ;
-                #redundancy = lexicalRedundancy(cleaned_text, summary_output, 0.07) ;
-                st.markdown(f"Redundancy: ") ;
+                redundancy = lexicalRedundancy(cleaned_text, summary_output, 0.07) ;
+                st.markdown(f"Redundancy: {redundancy}") ;
                 feed = filterText(summary_output) ;
                 fig, ax = plt.subplots(figsize = (12, 8)) ;
-                ax.imshow(generateWordCloud(feed, 10)) ;
+                if redundancy != 0:
+                    ax.imshow(generateWordCloud(feed, len(redundancy))) ;                
+                else:
+                    ax.imshow(generateWordCloud(feed, 10)) ;
                 plt.axis("off") ;
                 st.pyplot(fig) ;
 
