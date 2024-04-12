@@ -331,7 +331,7 @@ with tab2:
                 st.markdown(f"Redundancy: ") ;
                 feed = filterText(summary_output) ;
                 fig, ax = plt.subplots(figsize = (12, 8)) ;
-                ax.imshow(generateWordCloud(feed, 10) ;
+                ax.imshow(generateWordCloud(feed, 10)) ;
                 plt.axis("off") ;
                 st.pyplot(fig) ;
 
